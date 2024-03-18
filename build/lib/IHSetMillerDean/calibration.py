@@ -4,7 +4,7 @@ from datetime import datetime
 from spotpy.parameter import Uniform
 from .millerDean import millerDean
 from IHSetCalibration import objective_functions
-from IHSetUtils import wMOORE
+from IHSetUtils import wMOORE, wast
 
 class cal_MillerDean(object):
     """
@@ -66,6 +66,7 @@ class cal_MillerDean(object):
 
         self.ws = wMOORE(self.D50)
         self.Omega = self.Hb / (self.ws * self.Tp)
+        self.wast = wast(self.Hb, self.D50)
         
         self.split_data()
 
@@ -90,7 +91,9 @@ class cal_MillerDean(object):
                 Ymd, _ = millerDean(self.Hb_splited,
                                     self.depthb_splited,
                                     self.sl_splited,
+                                    self.wast_splited,
                                     self.dt,
+                                    self.Hberm,
                                     Y0,
                                     kero,
                                     kacr,
@@ -116,7 +119,9 @@ class cal_MillerDean(object):
                 Ymd, _ = millerDean(self.Hb_splited,
                                     self.depthb_splited,
                                     self.sl_splited,
+                                    self.wast_splited,
                                     self.dt,
+                                    self.Hberm,
                                     Y0,
                                     kero,
                                     kacr,
@@ -142,6 +147,7 @@ class cal_MillerDean(object):
         self.depthb_splited = self.depthb[idx]
         self.sl_splited = self.sl[idx]
         self.Omega_splited = self.Omega[idx]
+        self.wast_splited = self.wast[idx]
         self.time_splited = self.time[idx]
 
         idx = np.where((self.time_obs >= self.start_date) & (self.time_obs <= self.end_date))

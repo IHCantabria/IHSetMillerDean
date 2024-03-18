@@ -3,7 +3,7 @@ from numba import jit
 from IHSetUtils import wast
 
 @jit
-def millerDean(Hb, depthb, sl, dt, D50, Hberm, Y0, kero, kacr, Yini, flagP=1, Omega=0):
+def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, Omega=0):
     if flagP == 1:
         kero = np.full_like(Hb, kero)
         kacr = np.full_like(Hb, kacr)
@@ -20,8 +20,7 @@ def millerDean(Hb, depthb, sl, dt, D50, Hberm, Y0, kero, kacr, Yini, flagP=1, Om
     yeq = np.zeros_like(Hb)
     Y = np.zeros_like(Hb)
     wl = 0.106 * Hb + sl
-    Wast = wast(depthb, D50)
-    yeq = Y0 - Wast * wl / (Hberm + depthb)
+    yeq = Y0 - wast * wl / (Hberm + depthb)
 
     Y[0] = Yini
 
