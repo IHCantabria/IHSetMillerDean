@@ -64,7 +64,7 @@ class cal_MillerDean(object):
         except:
             self.sl = slv['sl'].values
         
-
+        self.Omega = self.Hb / (self.ws * self.Tp)
         self.split_data()
 
         if self.switch_Yini == 0:
@@ -77,7 +77,7 @@ class cal_MillerDean(object):
         self.idx_obs = mkIdx(self.time_obs)
 
         self.ws = wMOORE(self.D50)
-        self.Omega = self.Hb / (self.ws * self.Tp)
+        
 
         if self.switch_Yini == 0:
             def model_simulation(par):
