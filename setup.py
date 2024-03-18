@@ -11,7 +11,7 @@ setup(
         'numba',
         'datetime',
         'spotpy',
-        'IHSetUtils @ git+https://github.com/IHCantabria/IHSetCalibration.git',
+        'IHSetCalibration @ git+https://github.com/IHSetCalibration.git',
         'IHSetUtils @ git+https://github.com/IHCantabria/IHSetUtils.git'
     ],
     author='Lucas de Freitas Pereira',
