@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+IHSetMillerDean.egg-info/PKG-INFO
+IHSetMillerDean.egg-info/SOURCES.txt
+IHSetMillerDean.egg-info/dependency_links.txt
+IHSetMillerDean.egg-info/requires.txt
+IHSetMillerDean.egg-info/top_level.txt
+IHSetYates09/__init__.py
+IHSetYates09/calibration.py
+IHSetYates09/millerDean.py

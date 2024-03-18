@@ -1,0 +1,7 @@
+numpy
+xarray
+numba
+datetime
+spotpy
+IHSetUtils@ git+https://github.com/IHCantabria/IHSetCalibration.git
+IHSetUtils@ git+https://github.com/IHCantabria/IHSetUtils.git
