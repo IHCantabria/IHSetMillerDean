@@ -3,7 +3,7 @@ from numba import jit
 from IHSetUtils import wast
 
 @jit
-def mileerDean(Hb, depthb, sl, dt, D50, Hberm, Y0, kero, kacr, Yini, flagP=1, Omega=0):
+def millerDean(Hb, depthb, sl, dt, D50, Hberm, Y0, kero, kacr, Yini, flagP=1, Omega=0):
     if flagP == 1:
         kero = np.full_like(Hb, kero)
         kacr = np.full_like(Hb, kacr)
