@@ -23,7 +23,7 @@ class cal_MillerDean(object):
         mkTime = np.vectorize(lambda Y, M, D, h: datetime(int(Y), int(M), int(D), int(h), 0, 0))
 
         cfg = xr.open_dataset(path+'config.nc')
-        wav = xr.open_dataset(path+'wav.nc')
+        wav = xr.open_dataset(path+'wavb.nc')
         ens = xr.open_dataset(path+'ens.nc')
         slv = xr.open_dataset(path+'sl.nc')
 
