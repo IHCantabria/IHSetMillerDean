@@ -7,14 +7,14 @@ def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, O
         kero = np.full_like(Hb, kero)
         kacr = np.full_like(Hb, kacr)
     elif flagP == 2:
-        kero *= Hb ** 2
-        kacr *= Hb ** 2
+        kero = Hb ** 2 * kero
+        kacr = Hb ** 2 * kacr
     elif flagP == 3:
-        kero *= Hb ** 3
-        kacr *= Hb ** 3
+        kero = Hb ** 3 * kero
+        kacr = Hb ** 3 * kacr
     elif flagP == 4:
-        kero *= Omega
-        kacr *= Omega
+        kero = Omega * kero
+        kacr = Omega * kacr
 
     yeq = np.zeros_like(Hb)
     Y = np.zeros_like(Hb)
