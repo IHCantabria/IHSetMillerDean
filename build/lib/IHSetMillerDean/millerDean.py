@@ -1,6 +1,5 @@
 import numpy as np
 from numba import jit
-from IHSetUtils import wast
 
 @jit
 def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, Omega=0):
