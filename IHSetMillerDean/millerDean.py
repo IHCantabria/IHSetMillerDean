@@ -31,7 +31,4 @@ def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, O
             A = kero[i] * dt * 0.5
             Y[i] = (Y[i - 1] + A * (yeq[i] + yeq[i - 1] - Y[i - 1])) / (1 + A)
 
-    return Y
-
-
-    return Y, Seq
+    return Y, yeq
