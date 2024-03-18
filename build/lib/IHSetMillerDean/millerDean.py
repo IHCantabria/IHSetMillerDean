@@ -4,17 +4,17 @@ from numba import jit
 @jit
 def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, Omega=0):
     if flagP == 1:
-        kero = np.full_like(Hb, kero)
-        kacr = np.full_like(Hb, kacr)
+        kero_ = np.full_like(Hb, kero)
+        kacr_ = np.full_like(Hb, kacr)
     elif flagP == 2:
-        kero = Hb ** 2 * kero
-        kacr = Hb ** 2 * kacr
+        kero_ = Hb ** 2 * kero
+        kacr_ = Hb ** 2 * kacr
     elif flagP == 3:
-        kero = Hb ** 3 * kero
-        kacr = Hb ** 3 * kacr
+        kero_ = Hb ** 3 * kero
+        kacr_ = Hb ** 3 * kacr
     elif flagP == 4:
-        kero = Omega * kero
-        kacr = Omega * kacr
+        kero_ = Omega * kero
+        kacr_ = Omega * kacr
 
     yeq = np.zeros_like(Hb)
     Y = np.zeros_like(Hb)
@@ -25,10 +25,10 @@ def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, O
 
     for i in range(1, len(Hb)):
         if Y[i] < yeq[i]:
-            A = kacr[i] * dt * 0.5
+            A = kacr_[i] * dt * 0.5
             Y[i] = (Y[i - 1] + A * (yeq[i] + yeq[i - 1] - Y[i - 1])) / (1 + A)
         else:
-            A = kero[i] * dt * 0.5
+            A = kero_[i] * dt * 0.5
             Y[i] = (Y[i - 1] + A * (yeq[i] + yeq[i - 1] - Y[i - 1])) / (1 + A)
 
     return Y, yeq
