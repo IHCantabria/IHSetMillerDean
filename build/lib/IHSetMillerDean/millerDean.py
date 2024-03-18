@@ -25,10 +25,10 @@ def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, O
 
     for i in range(1, len(Hb)):
         if Y[i] < yeq[i]:
-            A = kacr * dt * 0.5
+            A = kacr[i] * dt * 0.5
             Y[i] = (Y[i - 1] + A * (yeq[i] + yeq[i - 1] - Y[i - 1])) / (1 + A)
         else:
-            A = kero * dt * 0.5
+            A = kero[i] * dt * 0.5
             Y[i] = (Y[i - 1] + A * (yeq[i] + yeq[i - 1] - Y[i - 1])) / (1 + A)
 
     return Y
