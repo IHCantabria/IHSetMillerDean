@@ -84,8 +84,8 @@ class cal_MillerDean(object):
 
         if self.switch_Yini == 0:
             def model_simulation(par):
-                kero = par['kacr']
-                kacr = par['kero']
+                kero = par['kero']
+                kacr = par['kacr']
                 Y0 = par['Y0']
                 
                 Ymd, _ = millerDean(self.Hb_splited,
@@ -111,8 +111,8 @@ class cal_MillerDean(object):
 
         elif self.switch_Yini == 1:
             def model_simulation(par):
-                kero = par['kacr']
-                kacr = par['kero']
+                kero = par['kero']
+                kacr = par['kacr']
                 Y0 = par['Y0']
                 Yini = par['Yini']
                 
@@ -157,8 +157,3 @@ class cal_MillerDean(object):
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time_splited - t)))
         self.idx_obs_splited = mkIdx(self.time_obs_splited)
         self.observations = self.Y_obs_splited
-
-
-        
-
-
