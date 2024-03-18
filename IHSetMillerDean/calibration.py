@@ -66,7 +66,7 @@ class cal_MillerDean(object):
 
         self.ws = wMOORE(self.D50)
         self.Omega = self.Hb / (self.ws * self.Tp)
-        self.wast = wast(self.Hb, self.D50)
+        self.wast = wast(self.depthb, self.D50)
         
         self.split_data()
 
