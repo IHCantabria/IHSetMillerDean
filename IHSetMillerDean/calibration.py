@@ -63,8 +63,10 @@ class cal_MillerDean(object):
             self.sl = slv['sl'].values
         except:
             self.sl = slv['sl'].values
-        
+
+        self.ws = wMOORE(self.D50)
         self.Omega = self.Hb / (self.ws * self.Tp)
+        
         self.split_data()
 
         if self.switch_Yini == 0:
@@ -76,7 +78,7 @@ class cal_MillerDean(object):
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time - t)))
         self.idx_obs = mkIdx(self.time_obs)
 
-        self.ws = wMOORE(self.D50)
+        
         
 
         if self.switch_Yini == 0:
