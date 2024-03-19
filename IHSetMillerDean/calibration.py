@@ -143,7 +143,7 @@ class cal_MillerDean(object):
         Split the data into calibration and validation datasets.
         """ 
 
-        idx = np.where((self.time < self.start_date) & (self.time > self.end_date))
+        idx = np.where((self.time < self.start_date) | (self.time > self.end_date))
         self.idx_validation = idx
 
         idx = np.where((self.time >= self.start_date) & (self.time <= self.end_date))

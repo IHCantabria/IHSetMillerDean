@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='IHSetMillerDean',
-    version='1.0.21',
+    version='1.1.0',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
