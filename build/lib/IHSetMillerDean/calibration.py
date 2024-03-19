@@ -103,8 +103,8 @@ class cal_MillerDean(object):
                 return Ymd[self.idx_obs_splited]
             
             self.params = [
-                Uniform('kero', 1e-6, 1e-2),
-                Uniform('kacr', 1e-6, 1e-2),
+                Uniform('kero', 1e-7, 1e-2),
+                Uniform('kacr', 1e-7, 1e-2),
                 Uniform('Y0', 0.25*np.min(self.Y_obs), 2*np.max(self.Y_obs))
             ]
             self.model_sim = model_simulation
@@ -131,8 +131,8 @@ class cal_MillerDean(object):
                 return Ymd[self.idx_obs_splited]
             
             self.params = [
-                Uniform('kero', 1e-6, 1e-2),
-                Uniform('kacr', 1e-6, 1e-2),
+                Uniform('kero', 1e-7, 1e-2),
+                Uniform('kacr', 1e-7, 1e-2),
                 Uniform('Y0', 0.25*np.min(self.Y_obs), 2*np.max(self.Y_obs)),
                 Uniform('Yini', np.min(self.Y_obs), (self.Y_obs))
             ]
