@@ -145,8 +145,6 @@ class cal_MillerDean(object):
 
         idx = np.where((self.time < self.start_date) & (self.time > self.end_date))
         self.idx_validation = idx
-        mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time[self.idx_validation] - t)))
-        self.idx_validation_obs = mkIdx(self.time_obs)
 
         idx = np.where((self.time >= self.start_date) & (self.time <= self.end_date))
         self.idx_calibration = idx
@@ -165,4 +163,9 @@ class cal_MillerDean(object):
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time_splited - t)))
         self.idx_obs_splited = mkIdx(self.time_obs_splited)
         self.observations = self.Y_obs_splited
+
+        # Validation    
+        idx = np.where((self.time_obs < self.start_date) | (self.time_obs > self.end_date))
+        mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time[self.idx_validation] - t)))
+        self.idx_validation_obs = mkIdx(self.time_obs[idx])
 
