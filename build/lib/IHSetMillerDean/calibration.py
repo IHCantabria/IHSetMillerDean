@@ -51,7 +51,7 @@ class cal_MillerDean(object):
 
         self.time = mkTime(wav['Y'].values, wav['M'].values, wav['D'].values, wav['h'].values)
         
-        self.Y_obs = ens['Obs'].values
+        self.Obs = ens['Obs'].values
         self.time_obs = mkTime(ens['Y'].values, ens['M'].values, ens['D'].values, ens['h'].values)
 
         self.start_date = datetime(int(cfg['Ysi'].values), int(cfg['Msi'].values), int(cfg['Dsi'].values))
@@ -71,7 +71,7 @@ class cal_MillerDean(object):
         self.split_data()
 
         if self.switch_Yini == 0:
-            self.Yini = self.Y_obs_splited[0]
+            self.Yini = self.Obs_splited[0]
 
         cfg.close()
         wav.close()
@@ -105,7 +105,7 @@ class cal_MillerDean(object):
             self.params = [
                 Uniform('kero', 1e-7, 1e-2),
                 Uniform('kacr', 1e-7, 1e-2),
-                Uniform('Y0', 0.25*np.min(self.Y_obs), 2*np.max(self.Y_obs))
+                Uniform('Y0', 0.25*np.min(self.Obs), 2*np.max(self.Obs))
             ]
             self.model_sim = model_simulation
 
@@ -133,8 +133,8 @@ class cal_MillerDean(object):
             self.params = [
                 Uniform('kero', 1e-7, 1e-2),
                 Uniform('kacr', 1e-7, 1e-2),
-                Uniform('Y0', 0.25*np.min(self.Y_obs), 2*np.max(self.Y_obs)),
-                Uniform('Yini', np.min(self.Y_obs), (self.Y_obs))
+                Uniform('Y0', 0.25*np.min(self.Obs), 2*np.max(self.Obs)),
+                Uniform('Yini', np.min(self.Obs), (self.Obs))
             ]
             self.model_sim = model_simulation
 
@@ -157,15 +157,16 @@ class cal_MillerDean(object):
 
         idx = np.where((self.time_obs >= self.start_date) & (self.time_obs <= self.end_date))
 
-        self.Y_obs_splited = self.Y_obs[idx]
+        self.Obs_splited = self.Obs[idx]
         self.time_obs_splited = self.time_obs[idx]
 
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time_splited - t)))
         self.idx_obs_splited = mkIdx(self.time_obs_splited)
-        self.observations = self.Y_obs_splited
+        self.observations = self.Obs_splited
 
         # Validation    
         idx = np.where((self.time_obs < self.start_date) | (self.time_obs > self.end_date))
+        self.idx_validation_obs = idx
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time[self.idx_validation] - t)))
-        self.idx_validation_obs = mkIdx(self.time_obs[idx])
+        self.idx_validation_for_obs = mkIdx(self.time_obs[idx])
 
