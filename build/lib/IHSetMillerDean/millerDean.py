@@ -16,6 +16,8 @@ def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=1, O
         kero_ = Omega * kero
         kacr_ = Omega * kacr
 
+    Hb[Hb < 0.1] = 0.1
+    depthb[depthb < 0.01] = 0.01
     yeq = np.zeros_like(Hb)
     Y = np.zeros_like(Hb)
     wl = 0.106 * Hb + sl
