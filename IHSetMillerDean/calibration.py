@@ -134,7 +134,7 @@ class cal_MillerDean(object):
                 Uniform('kero', 1e-7, 1e-2),
                 Uniform('kacr', 1e-7, 1e-2),
                 Uniform('Y0', 0.25*np.min(self.Obs), 2*np.max(self.Obs)),
-                Uniform('Yini', np.min(self.Obs), (self.Obs))
+                Uniform('Yini', 0.5*np.min(self.Obs), 1.5*np.max(self.Obs))
             ]
             self.model_sim = model_simulation
 
