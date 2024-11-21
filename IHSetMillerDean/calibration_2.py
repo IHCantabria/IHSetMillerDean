@@ -11,7 +11,7 @@ class cal_MillerDean_2(object):
     """
     cal_MillerDean_2
     
-    Configuration to calibrate and run the Yates et al. (2009) Shoreline Evolution Model.
+    Configuration to calibrate and run the Miller and Dean (2004) Shoreline Evolution Model.
     
     This class reads input datasets, performs its calibration.
     """
