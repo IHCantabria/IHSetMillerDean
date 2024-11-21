@@ -26,7 +26,6 @@ class cal_MillerDean_2(object):
 
         self.cal_alg = cfg['cal_alg']
         self.metrics = cfg['metrics']
-        self.dt = cfg['dt']
         self.switch_Yini = cfg['switch_Yini']
         self.lb = cfg['lb']
         self.ub = cfg['ub']
@@ -139,6 +138,12 @@ class cal_MillerDean_2(object):
 
         
         self.idx_obs = mkIdx(self.time_obs)
+
+        # Now we calculate the dt from the time variable
+        mkDT = np.vectorize(lambda i: (self.time[i+1] - self.time[i]).total_seconds()/3600)
+        self.dt = mkDT(np.arange(0, len(self.time)-1))
+        mkDTsplited = np.vectorize(lambda i: (self.time_splited[i+1] - self.time_splited[i]).total_seconds()/3600)
+        self.dt_splited = mkDTsplited(np.arange(0, len(self.time_splited)-1))
 
         if self.switch_Yini == 0:
             def model_simulation(par):
