@@ -31,6 +31,9 @@ class MillerDean_run(object):
         self.flagP = cfg['flagP']
         self.switch_Yini = cfg['switch_Yini']
         self.switch_brk = cfg['switch_brk']
+        if self.switch_brk == 1:
+            self.bathy_angle = cfg['bathy_angle']
+            self.breakType = cfg['break_type']
 
         if cfg['trs'] == 'Average':
             self.hs = np.mean(data.hs.values, axis=1)
