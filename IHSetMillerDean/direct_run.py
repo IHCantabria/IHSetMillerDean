@@ -30,6 +30,7 @@ class MillerDean_run(object):
         self.depth = cfg['depth']
         self.flagP = cfg['flagP']
         self.switch_Yini = cfg['switch_Yini']
+        self.switch_brk = cfg['switch_brk']
 
         if cfg['trs'] == 'Average':
             self.hs = np.mean(data.hs.values, axis=1)
@@ -82,7 +83,7 @@ class MillerDean_run(object):
 
         self.split_data()
 
-        if self.switch_Yini == 0:
+        if self.switch_Yini == 1:
             self.Yini = self.Obs_splited[0]
 
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time - t)))
