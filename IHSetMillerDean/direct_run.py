@@ -84,7 +84,8 @@ class MillerDean_run(object):
         self.split_data()
 
         if self.switch_Yini == 1:
-            self.Yini = self.Obs_splited[0]
+            ii = np.argmin(np.abs(self.time_obs - self.time[0]))
+            self.Yini = self.Obs[ii]
 
         mkIdx = np.vectorize(lambda t: np.argmin(np.abs(self.time - t)))
         
@@ -93,8 +94,6 @@ class MillerDean_run(object):
         # Now we calculate the dt from the time variable
         mkDT = np.vectorize(lambda i: (self.time[i+1] - self.time[i]).total_seconds()/3600)
         self.dt = mkDT(np.arange(0, len(self.time)-1))
-        mkDTsplited = np.vectorize(lambda i: (self.time_splited[i+1] - self.time_splited[i]).total_seconds()/3600)
-        self.dt_splited = mkDTsplited(np.arange(0, len(self.time_splited)-1))
 
         if self.switch_Yini == 0:
             def run_model(par):
