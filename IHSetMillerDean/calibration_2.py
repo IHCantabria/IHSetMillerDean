@@ -113,7 +113,7 @@ class cal_MillerDean_2(object):
         data.close()
         
         if self.switch_brk == 0:
-            self.depthb = self.depth
+            self.depthb = self.hs/0.55
             self.hb = self.hs
             self.dirb = self.dir
         elif self.switch_brk == 1:

@@ -29,29 +29,38 @@ class MillerDean_run(object):
         self.hberm = cfg['Hberm']
         self.depth = cfg['depth']
         self.flagP = cfg['flagP']
+        self.switch_Yini = cfg['switch_Yini']
 
         if cfg['trs'] == 'Average':
             self.hs = np.mean(data.hs.values, axis=1)
+            self.tp = np.mean(data.tp.values, axis=1)
+            self.dir = circmean(data.dir.values, axis=1, high=360, low=0)
+            self.tide = np.mean(data.tide.values, axis=1)
+            self.surge = np.mean(data.surge.values, axis=1)
+            self.sl = self.surge + self.tide
             self.time = pd.to_datetime(data.time.values)
-            self.E = self.hs ** 2
             self.Obs = data.average_obs.values
             self.Obs = self.Obs[~data.mask_nan_average_obs]
             self.time_obs = pd.to_datetime(data.time_obs.values)
             self.time_obs = self.time_obs[~data.mask_nan_average_obs]
         else:
             self.hs = data.hs.values[:, cfg['trs']]
+            self.tp = data.tp.values[:, cfg['trs']]
+            self.dir = data.dir.values[:, cfg['trs']]
+            self.tide = data.tide.values[:, cfg['trs']]
+            self.surge = data.surge.values[:, cfg['trs']]
+            self.sl = self.surge + self.tide
             self.time = pd.to_datetime(data.time.values)
-            self.E = self.hs ** 2
             self.Obs = data.obs.values[:, cfg['trs']]
             self.Obs = self.Obs[~data.mask_nan_obs[:, cfg['trs']]]
             self.time_obs = pd.to_datetime(data.time_obs.values)
             self.time_obs = self.time_obs[~data.mask_nan_obs[:, cfg['trs']]]
-
-        if cfg['switch_Yini'] == 1:
-            ii = np.argmin(np.abs(self.time_obs - self.time[0]))
-            self.Yini = self.Obs[ii]
         
         data.close()
+
+        if self.switch_Yini == 1:
+            ii = np.argmin(np.abs(self.time_obs - self.time[0]))
+            self.Yini = self.Obs[ii]
 
         self.start_date = pd.to_datetime(cfg['start_date'])
         self.end_date = pd.to_datetime(cfg['end_date'])
@@ -88,30 +97,8 @@ class MillerDean_run(object):
 
         if self.switch_Yini == 0:
             def run_model(par):
-                kero = np.exp(par[0])
-                kacr = np.exp(par[1])
-                Y0 = par[2]
-                
-                Ymd, _ = millerDean_njit(self.hb,
-                                    self.depthb,
-                                    self.sl,
-                                    self.wast,
-                                    self.dt,
-                                    self.hberm,
-                                    Y0,
-                                    kero,
-                                    kacr,
-                                    self.Yini,
-                                    self.flagP,
-                                    self.Omega)
-                return Ymd
-            
-            self.run_model = run_model
-
-        elif self.switch_Yini == 1:
-            def run_model(par):
-                kero = np.exp(par[0])
-                kacr = np.exp(par[1])
+                kero = par[0]
+                kacr = par[1]
                 Y0 = par[2]
                 Yini = par[3]
                 
@@ -125,6 +112,28 @@ class MillerDean_run(object):
                                     kero,
                                     kacr,
                                     Yini,
+                                    self.flagP,
+                                    self.Omega)
+                return Ymd
+            
+            self.run_model = run_model
+
+        elif self.switch_Yini == 1:
+            def run_model(par):
+                kero = par[0]
+                kacr = par[1]
+                Y0 = par[2]
+                
+                Ymd, _ = millerDean_njit(self.hb,
+                                    self.depthb,
+                                    self.sl,
+                                    self.wast,
+                                    self.dt,
+                                    self.hberm,
+                                    Y0,
+                                    kero,
+                                    kacr,
+                                    self.Yini,
                                     self.flagP,
                                     self.Omega)
                 return Ymd
@@ -151,6 +160,10 @@ class MillerDean_run(object):
         self.Omega = self.Omega[ii]
         self.wast = self.wast[ii]
         self.time = self.time[ii]
+
+        ii = np.where((self.time_obs >= self.start_date) & (self.time_obs <= self.end_date))[0]
+        self.Obs = self.Obs[ii]
+        self.time_obs = self.time_obs[ii]
 
 
 
