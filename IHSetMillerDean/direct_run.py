@@ -8,11 +8,11 @@ from IHSetUtils import wMOORE, wast, BreakingPropagation
 from scipy.stats import circmean
 
 
-class Yates09_run(object):
+class MillerDean_run(object):
     """
-    Yates09_run
+    run_MillerDean
     
-    Configuration to calibrate and run the Yates et al. (2009) Shoreline Evolution Model.
+    Configuration to calibrate and run the Miller and Dean (2004) Shoreline Evolution Model.
     
     This class reads input datasets, performs its calibration.
     """
