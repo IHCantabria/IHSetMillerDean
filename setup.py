@@ -2,18 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='IHSetMillerDean',
-    version='1.3.12',
+    version='1.3.13',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
         'numpy',
         'xarray',
         'numba',
-        'datetime',
-        'spotpy',
         'pandas',
         'scipy',
-        'IHSetCalibration @ git+https://github.com/defreitasL/IHSetCalibration.git',
         'IHSetUtils @ git+https://github.com/IHCantabria/IHSetUtils.git',
         'fast_optimization @ git+https://github.com/defreitasL/fast_optimization.git'
     ],
