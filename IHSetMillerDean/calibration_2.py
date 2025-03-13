@@ -269,12 +269,12 @@ class cal_MillerDean_2(object):
         self.full_run = self.run_model(self.solution)
 
         if self.switch_Yini == 0:
-            self.par_names = ['kero', 'kacr', 'Y0']
+            self.par_names = [rf'$k^-$', rf'$k^+$', rf'$Y_0$']
             self.par_values = self.solution
             self.par_values[0] = np.exp(self.par_values[0])
             self.par_values[1] = np.exp(self.par_values[1])
         elif self.switch_Yini == 1:
-            self.par_names = ['kero', 'kacr', 'Y0', 'Yini']
+            self.par_names = [rf'$k^-$', rf'$k^+$', rf'$Y_0$', rf'$Y_i$']
             self.par_values = self.solution
             self.par_values[0] = np.exp(self.par_values[0])
             self.par_values[1] = np.exp(self.par_values[1])

@@ -147,10 +147,10 @@ class MillerDean_run(object):
     def run(self, par):
         self.full_run = self.run_model(par)
         if self.switch_Yini == 1:
-            self.par_names = ['kero', 'kacr', 'Y0']
+            self.par_names = [rf'$k^-$', rf'$k^+$', rf'$Y_0$']
             self.par_values = par
         elif self.switch_Yini == 0:
-            self.par_names = ['kero', 'kacr', 'Y0', 'Yini']
+            self.par_names = [rf'$k^-$', rf'$k^+$', rf'$Y_0$', rf'$Y_i$']
             self.par_values = par
 
         self.calculate_metrics()
