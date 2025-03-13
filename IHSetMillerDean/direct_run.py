@@ -21,7 +21,7 @@ class MillerDean_run(object):
 
         self.path = path
         self.name = 'Miller and Dean (2004)'
-             
+
         data = xr.open_dataset(path)
         
         cfg = json.loads(data.attrs['run_MillerDean'])
@@ -146,6 +146,13 @@ class MillerDean_run(object):
     
     def run(self, par):
         self.full_run = self.run_model(par)
+        if self.switch_Yini == 1:
+            self.par_names = ['kero', 'kacr', 'Y0']
+            self.par_values = self.solution
+        elif self.switch_Yini == 0:
+            self.par_names = ['kero', 'kacr', 'Y0', 'Yini']
+            self.par_values = self.solution
+
         self.calculate_metrics()
 
     def calculate_metrics(self):
