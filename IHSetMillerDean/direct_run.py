@@ -21,6 +21,8 @@ class MillerDean_run(object):
 
         self.path = path
         self.name = 'Miller and Dean (2004)'
+        self.mode = 'standalone'
+        self.type = 'CS'
 
         data = xr.open_dataset(path)
         

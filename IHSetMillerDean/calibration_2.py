@@ -20,6 +20,8 @@ class cal_MillerDean_2(object):
 
         self.path = path
         self.name = 'Miller and Dean (2004)'
+        self.mode = 'calibration'
+        self.type = 'CS'
      
         data = xr.open_dataset(path)
         
