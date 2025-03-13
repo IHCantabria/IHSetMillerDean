@@ -20,7 +20,8 @@ class MillerDean_run(object):
     def __init__(self, path):
 
         self.path = path
-     
+        self.name = 'Miller and Dean (2004)'
+             
         data = xr.open_dataset(path)
         
         cfg = json.loads(data.attrs['run_MillerDean'])
