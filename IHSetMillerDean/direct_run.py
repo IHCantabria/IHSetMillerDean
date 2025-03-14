@@ -27,6 +27,7 @@ class MillerDean_run(object):
         data = xr.open_dataset(path)
         
         cfg = json.loads(data.attrs['run_MillerDean'])
+        self.cfg = cfg
 
         self.D50 = cfg['D50']
         self.hberm = cfg['Hberm']
