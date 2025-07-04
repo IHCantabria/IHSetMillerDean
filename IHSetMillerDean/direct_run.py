@@ -158,7 +158,7 @@ class MillerDean_run(object):
             self.par_names = [r'k-', r'k+', r'Y_0', r'Y_i']
             self.par_values = par
 
-        self.calculate_metrics()
+        # self.calculate_metrics()
 
     def calculate_metrics(self):
         self.metrics_names = fo.backtot()[0]
