@@ -165,21 +165,21 @@
 #         self.indexes = fo.multi_obj_indexes(self.metrics_names)
 #         self.metrics = fo.multi_obj_func(self.Obs, self.full_run[self.idx_obs], self.indexes)
 
-#     def split_data(self):
-#         """
-#         Split the data into calibration and validation datasets.
-#         """ 
-#         ii = np.where((self.time >= self.start_date) & (self.time <= self.end_date))[0]
-#         self.hb = self.hb[ii]
-#         self.depthb = self.depthb[ii]
-#         self.sl = self.sl[ii]
-#         self.Omega = self.Omega[ii]
-#         self.wast = self.wast[ii]
-#         self.time = self.time[ii]
+# def split_data(self):
+#     """
+#     Split the data into calibration and validation datasets.
+#     """ 
+#     ii = np.where((self.time >= self.start_date) & (self.time <= self.end_date))[0]
+#     self.hb = self.hb[ii]
+#     self.depthb = self.depthb[ii]
+#     self.sl = self.sl[ii]
+#     self.Omega = self.Omega[ii]
+#     self.wast = self.wast[ii]
+#     self.time = self.time[ii]
 
-#         ii = np.where((self.time_obs >= self.start_date) & (self.time_obs <= self.end_date))[0]
-#         self.Obs = self.Obs[ii]
-#         self.time_obs = self.time_obs[ii]
+#     ii = np.where((self.time_obs >= self.start_date) & (self.time_obs <= self.end_date))[0]
+#     self.Obs = self.Obs[ii]
+#     self.time_obs = self.time_obs[ii]
 
 
 import numpy as np
@@ -203,7 +203,7 @@ class MillerDean_run(CoastlineModel):
             model_name='Miller and Dean (2004)',
             mode='standalone',
             model_type='CS',
-            model_key='MillerDean'
+            model_key='run_MillerDean'
         )
 
         self.setup_forcing()
