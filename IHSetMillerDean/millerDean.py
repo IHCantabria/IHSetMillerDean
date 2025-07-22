@@ -36,7 +36,7 @@ def millerDean_old(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP=
     return Y, yeq
 
 
-@njit(nopython=True, fastmath=True, cache=True)
+@njit(fastmath=True, cache=True)
 def millerDean(Hb, depthb, sl, wast, dt, Hberm, Y0, kero, kacr, Yini, flagP, Omega):
     n = Hb.shape[0]
 
