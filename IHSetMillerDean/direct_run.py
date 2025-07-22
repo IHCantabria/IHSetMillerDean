@@ -214,7 +214,7 @@ class MillerDean_run(CoastlineModel):
         self.D50 = self.cfg['D50']
         self.hberm = self.cfg['Hberm']
         self.flagP = self.cfg['flagP']
-        if self.switch_Yini == 0:
+        if self.switch_Yini == 1:
             self.Yini = self.Obs[0]
 
         self.sl = self.surge + self.tide
