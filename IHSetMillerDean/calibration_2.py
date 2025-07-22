@@ -101,9 +101,9 @@ class cal_MillerDean_2(CoastlineModel):
     
     def _set_parameter_names(self):
         if self.switch_Yini == 0:
-            self.parameter_names = ['k-', 'k+', 'Y0']
+            self.par_names = ['k-', 'k+', 'Y0']
         else:
-            self.parameter_names = ['k-', 'k+', 'Y0', 'Yini']
+            self.par_names = ['k-', 'k+', 'Y0', 'Yini']
         
         for idx in [0, 1]:
             self.par_values[idx] = np.exp(self.par_values[idx])
