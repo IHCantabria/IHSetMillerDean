@@ -215,7 +215,7 @@ class MillerDean_run(CoastlineModel):
         self.hberm = self.cfg['Hberm']
         self.flagP = self.cfg['flagP']
         if self.switch_Yini == 0:
-            self.Yini = self.Obs_splited[0]
+            self.Yini = self.Obs[0]
 
         self.sl = self.surge + self.tide
         self.wast = wast(self.hb, self.D50)
