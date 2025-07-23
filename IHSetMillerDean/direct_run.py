@@ -242,7 +242,7 @@ class MillerDean_run(CoastlineModel):
         return Ymd
     
     def _set_parameter_names(self):
-        if self.switch_Yini == 0:
+        if self.switch_Yini == 1:
             self.par_names = ['k-', 'k+', 'Y0']
         else:
             self.par_names = ['k-', 'k+', 'Y0', 'Yini']
