@@ -223,22 +223,18 @@ class MillerDean_run(CoastlineModel):
         self.Omega = self.hb / (self.ws * self.tp)
     
     def run_model(self, par: np.ndarray) -> np.ndarray:
+        kero = par[0]
+        kacr = par[1]
+        Y0 = par[2]
         if self.switch_Yini == 1:
-            kero = par[0]; kacr = par[1]
-            Y0 = par[2]
-            Ymd, _ = millerDean_njit(self.hb, self.depthb,
-                                     self.sl, self.wast,
-                                     self.dt, self.hberm,
-                                     Y0, kero, kacr, self.Yini,
-                                     self.flagP, self.Omega)
+            Yini = self.Yini
         else:
-            kero = par[0]; kacr = par[1]
-            Y0 = par[2]; Yini = par[3]
-            Ymd, _ = millerDean_njit(self.hb, self.depthb,
-                                     self.sl, self.wast,
-                                     self.dt, self.hberm,
-                                     Y0, kero, kacr, Yini,
-                                     self.flagP, self.Omega)
+            Yini = par[3]
+        Ymd, _ = millerDean_njit(self.hb, self.depthb,
+                                    self.sl, self.wast,
+                                    self.dt, self.hberm,
+                                    Y0, kero, kacr, Yini,
+                                    self.flagP, self.Omega)
         return Ymd
     
     def _set_parameter_names(self):

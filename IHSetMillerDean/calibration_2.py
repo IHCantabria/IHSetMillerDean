@@ -62,41 +62,33 @@ class cal_MillerDean_2(CoastlineModel):
         return pop, lowers, uppers
     
     def model_sim(self, par: np.ndarray) -> np.ndarray:
+        kero = np.exp(par[0])
+        kacr = np.exp(par[1])
+        Y0 = par[2]
         if self.switch_Yini == 0:
-            kero = np.exp(par[0]); kacr = np.exp(par[1])
-            Y0 = par[2]
-            Ymd, _ = millerDean(self.hb_s, self.depthb_s,
-                                self.sl_s, self.wast_s,
-                                self.dt_s, self.hberm,
-                                Y0, kero, kacr, self.Yini, 
-                                self.flagP, self.Omega_s)
+            Yini = self.Yini
         else:
-            kero = np.exp(par[0]); kacr = np.exp(par[1])
-            Y0 = par[2];           Yini = par[3]
-            Ymd, _ = millerDean(self.hb_s, self.depthb_s,
-                                self.sl_s, self.wast_s,
-                                self.dt_s, self.hberm,
-                                Y0, kero, kacr, Yini, self.flagP,
-                                self.Omega_s)
+            Yini = par[3]
+        Ymd, _ = millerDean(self.hb_s, self.depthb_s,
+                            self.sl_s, self.wast_s,
+                            self.dt_s, self.hberm,
+                            Y0, kero, kacr, Yini, self.flagP,
+                            self.Omega_s)
         return Ymd[self.idx_obs_splited]
     
     def run_model(self, par: np.ndarray) -> np.ndarray:
+        kero = par[0]
+        kacr = par[1]
+        Y0 = par[2]
         if self.switch_Yini == 0:
-            kero = par[0]; kacr = par[1]
-            Y0 = par[2]
-            Ymd, _ = millerDean(self.hb, self.depthb,
-                                self.sl, self.wast,
-                                self.dt, self.hberm,
-                                Y0, kero, kacr, self.Yini,
-                                self.flagP, self.Omega)
+            Yini = self.Yini
         else:
-            kero = par[0]; kacr = par[1]
-            Y0 = par[2]; Yini = par[3]
-            Ymd, _ = millerDean(self.hb, self.depthb,
-                                self.sl, self.wast,
-                                self.dt, self.hberm,
-                                Y0, kero, kacr, Yini,
-                                self.flagP, self.Omega)
+            Yini = par[3]
+        Ymd, _ = millerDean(self.hb, self.depthb,
+                            self.sl, self.wast,
+                            self.dt, self.hberm,
+                            Y0, kero, kacr, Yini,
+                            self.flagP, self.Omega)
         return Ymd
     
     def _set_parameter_names(self):
