@@ -4,3 +4,4 @@
 from .millerDean import millerDean
 from .calibration_2 import cal_MillerDean_2
 from .direct_run import MillerDean_run
+from .assimilation import assimilate_MillerDean

@@ -2,6 +2,7 @@ LICENSE
 README.md
 setup.py
 IHSetMillerDean/__init__.py
+IHSetMillerDean/assimilation.py
 IHSetMillerDean/calibration_2.py
 IHSetMillerDean/calibration_3.py
 IHSetMillerDean/direct_run.py
