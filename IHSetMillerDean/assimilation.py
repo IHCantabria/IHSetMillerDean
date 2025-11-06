@@ -81,21 +81,26 @@ class assimilate_MillerDean(CoastlineModel):
 
         # segment indices for this obs step
         i0, i1   = self.idx_obs_splited[t_idx - 1], self.idx_obs_splited[t_idx]
-        hb_seg     = self.hb_s[i0:i1]
-        depthb_seg = self.depthb_s[i0:i1]
-        sl_seg     = self.sl_s[i0:i1]
-        wast_seg   = self.wast_s[i0:i1]
-        dt_seg     = self.dt_s[i0:i1]
-        Omega_seg  = self.Omega_s[i0:i1]
+        if context is None or ('y_old' not in context):
+            y0 = float(self.Yini)   # first step starts from initial shoreline
+        else:
+            y0 = float(context['y_old'])
 
-        # initial condition for this segment
-        y0 = float(self.Yini) if (context is None or ('y_old' not in context)) else float(context['y_old'])
+        if i0 >= i1:
+            return np.array([y0], dtype=float), {'y_old': y0}
+        else:
+            hb_seg     = self.hb_s[i0:i1]
+            depthb_seg = self.depthb_s[i0:i1]
+            sl_seg     = self.sl_s[i0:i1]
+            wast_seg   = self.wast_s[i0:i1]
+            dt_seg     = self.dt_s[i0:i1]
+            Omega_seg  = self.Omega_s[i0:i1]
 
-        Ymd, _ = millerDean(hb_seg, depthb_seg, sl_seg, wast_seg, dt_seg,
-                            self.hberm, Y0, kero, kacr, y0, self.flagP, Omega_seg)
-        y_last = float(Ymd[-1])
-        context = {'y_old': y_last}
-        return y_last, context
+            Ymd, _ = millerDean(hb_seg, depthb_seg, sl_seg, wast_seg, dt_seg,
+                                self.hberm, Y0, kero, kacr, y0, self.flagP, Omega_seg)
+            y_last = float(Ymd[-1])
+            context = {'y_old': y_last}
+            return y_last, context
 
     # ----------------------
     # Vectorized batch step (fast path)
@@ -106,28 +111,38 @@ class assimilate_MillerDean(CoastlineModel):
         new_ctx = [None] * N
 
         i0, i1   = self.idx_obs_splited[t_idx - 1], self.idx_obs_splited[t_idx]
-        hb_seg     = self.hb_s[i0:i1]
-        depthb_seg = self.depthb_s[i0:i1]
-        sl_seg     = self.sl_s[i0:i1]
-        wast_seg   = self.wast_s[i0:i1]
-        dt_seg     = self.dt_s[i0:i1]
-        Omega_seg  = self.Omega_s[i0:i1]
 
-        for j in range(N):
-            kero = float(np.exp(pop[j, 0]))
-            kacr = float(np.exp(pop[j, 1]))
-            Y0   = float(pop[j, 2])
+        if i0 >= i1:
+            for j in range(N):
+                y0 = float(self.Yini) if (contexts is None or contexts[j] is None
+                                        or 'y_old' not in contexts[j]) else float(contexts[j]['y_old'])
 
-            y0 = float(self.Yini) if (contexts is None or contexts[j] is None
-                                      or ('y_old' not in contexts[j])) else float(contexts[j]['y_old'])
+                y_out[j]   = y0
+                new_ctx[j] = {'y_old': y0}
+            return y_out, new_ctx
+        else:
+            hb_seg     = self.hb_s[i0:i1]
+            depthb_seg = self.depthb_s[i0:i1]
+            sl_seg     = self.sl_s[i0:i1]
+            wast_seg   = self.wast_s[i0:i1]
+            dt_seg     = self.dt_s[i0:i1]
+            Omega_seg  = self.Omega_s[i0:i1]
 
-            Ymd, _ = millerDean(hb_seg, depthb_seg, sl_seg, wast_seg, dt_seg,
-                                self.hberm, Y0, kero, kacr, y0, self.flagP, Omega_seg)
-            y_last = float(Ymd[-1])
-            y_out[j]   = y_last
-            new_ctx[j] = {'y_old': y_last}
+            for j in range(N):
+                kero = float(np.exp(pop[j, 0]))
+                kacr = float(np.exp(pop[j, 1]))
+                Y0   = float(pop[j, 2])
 
-        return y_out, new_ctx
+                y0 = float(self.Yini) if (contexts is None or contexts[j] is None
+                                        or ('y_old' not in contexts[j])) else float(contexts[j]['y_old'])
+
+                Ymd, _ = millerDean(hb_seg, depthb_seg, sl_seg, wast_seg, dt_seg,
+                                    self.hberm, Y0, kero, kacr, y0, self.flagP, Omega_seg)
+                y_last = float(Ymd[-1])
+                y_out[j]   = y_last
+                new_ctx[j] = {'y_old': y_last}
+
+            return y_out, new_ctx
 
     # ----------------------
     # Full forward run with final parameters (for plotting/output)
